@@ -302,25 +302,25 @@ namespace nortekmed.ahrs {
                 }
 
                 // calculate mean acceleration on all samples (removing dc component)
-                double[] meanacceleration = new double[] { 0.0, 0.0, 0.0 };
+                //double[] meanacceleration = new double[] { 0.0, 0.0, 0.0 };
 
-                for (int i = 0; i < acc_z.Length; i++)
-                {
-                    meanacceleration[0] += acc_x[i];
-                    meanacceleration[1] += acc_y[i];
-                    meanacceleration[2] += acc_z[i];
-                }
-                meanacceleration[0] = meanacceleration[0] / samples.Length;
-                meanacceleration[1] = meanacceleration[1] / samples.Length;
-                meanacceleration[2] = meanacceleration[2] / samples.Length;
+                //for (int i = 0; i < acc_z.Length; i++)
+                //{
+                //    meanacceleration[0] += acc_x[i];
+                //    meanacceleration[1] += acc_y[i];
+                //    meanacceleration[2] += acc_z[i];
+                //}
+                //meanacceleration[0] = meanacceleration[0] / samples.Length;
+                //meanacceleration[1] = meanacceleration[1] / samples.Length;
+                //meanacceleration[2] = meanacceleration[2] / samples.Length;
 
-                // remove the mean and multiply by acceleration constant to have it in m/(s*s)
-                for (int i = 0; i < samples.Length; i++)
-                {
-                    acc_x[i] = (acc_x[i] - meanacceleration[0]) * 9.80665;
-                    acc_y[i] = (acc_y[i] - meanacceleration[1]) * 9.80665;
-                    acc_z[i] = (acc_z[i] - meanacceleration[2]) * 9.80665;
-                }
+                //// remove the mean and multiply by acceleration constant to have it in m/(s*s)
+                //for (int i = 0; i < samples.Length; i++)
+                //{
+                //    acc_x[i] = (acc_x[i] - meanacceleration[0]) * 9.80665;
+                //    acc_y[i] = (acc_y[i] - meanacceleration[1]) * 9.80665;
+                //    acc_z[i] = (acc_z[i] - meanacceleration[2]) * 9.80665;
+                //}
 
                 //int NFFT = nsamples;
                 int NFFT = samples.Length; // sample.Length is nsamples minus 2 margin -- try to disable AHRS noise ....
@@ -351,14 +351,6 @@ namespace nortekmed.ahrs {
                 initbin = 10;
 
 
-
-                for (int i = 1; i < initbin; i++)
-                {
-                    double tmp = 10 * Math.Log10(czz[i]);
-                    if (tmp > maxlog10firstbins) maxlog10firstbins = tmp;
-                }
-                // then find first bins bigger
-                startbin = 0;
                 startbin = 34;
 
 
@@ -442,24 +434,18 @@ namespace nortekmed.ahrs {
                     }
                 }
 
-                //double[] c_cor_ahrs = (double[])acc_z.Clone();
-                //double[] q_cor_ahrs = (double[])acc_z.Clone();
-                //crosscorrelate(c_cor_ahrs, q_cor_ahrs, NFFT, deltaF);
-
-                //autocor_ahrs_correction = c_cor_ahrs;
-
                 // Try to do many things in one loop
                 for (int i = 0; i < NFFT; i++)
                 {
 
                     // Apply AHRS correction
-                    if (i <= middlebin)
-                    {
-                        ahrs_correction = -(30.0 / middlebin) * (middlebin - i);
-                        //ahrs_correction = -(25 / middlebin) * (middlebin - i);
-                    }
-                    else
-                        ahrs_correction = 0;
+                    //if (i <= middlebin)
+                    //{
+                    //    ahrs_correction = -(30.0 / middlebin) * (middlebin - i);
+                    //    //ahrs_correction = -(25 / middlebin) * (middlebin - i);
+                    //}
+                    //else
+                    //    ahrs_correction = 0;
 
                     //if (ahrs_correction != 0)
                     //    t_ahrs_correction[i] = 10 * Math.Log10(Math.Abs(ahrs_correction));
