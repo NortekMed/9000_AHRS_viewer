@@ -45,6 +45,7 @@ namespace nortekmed.ahrs {
         public double[] t_ahrs_correction = new double[4096];
 
         public double correction_value;
+        public double corrperiod;
 
         public AccAngularRateMagVectorOrientationMatrix[] samples;
 
@@ -353,7 +354,8 @@ namespace nortekmed.ahrs {
 
                 startbin = 34;
 
-
+                int corrbin = (int)Math.Floor((1 / corrperiod) / deltaF);
+                
 
                 // middlebin is abitrary 10s
                 double middle_period = 10;
@@ -408,12 +410,13 @@ namespace nortekmed.ahrs {
                 double sumovery_hf = 0;
 
                 double ahrs_correction = 0;
+                
 
                 for (int i = 0; i < NFFT; i++)
                 {
 
                     // Apply AHRS correction
-                    if (i <= middlebin)
+                    if (i <= corrbin)
                     {
                         ahrs_correction = -(correction_value / middlebin) * (middlebin - i);
                         //ahrs_correction = -(30.0 / middlebin) * (middlebin - i);

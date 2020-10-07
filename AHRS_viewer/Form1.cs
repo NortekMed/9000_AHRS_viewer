@@ -28,9 +28,13 @@ namespace AHRS_viewer
         {
             InitializeComponent();
 
-            FS_select.Items.Add("4.0");
+            for (int i = 0; i <= 10; i++)
+            {
+                FS_select.Items.Add((3.0 + i / 10.0).ToString("0.0"));
+            }
+            //FS_select.Items.Add("4.0");
             FS_select.Items.Add("5.34");
-            FS_select.SelectedIndex = 0;
+            FS_select.SelectedIndex = FS_select.FindString("4.0");
 
 
             for( int i = 0; i < 301; i++)
@@ -38,6 +42,13 @@ namespace AHRS_viewer
                 ahrs_corr.Items.Add((30.0 - i / 10.0).ToString("0.0"));
             }
             ahrs_corr.SelectedIndex = 0;
+
+            for (int i = 0; i <= 200; i++)
+            {
+                ahrs_corr_periode.Items.Add((10 + i/10.0).ToString("0.0"));
+            }
+            ahrs_corr_periode.SelectedIndex = 0;
+            
 
             listFilePath = new List<string>();
 
@@ -159,6 +170,9 @@ namespace AHRS_viewer
             double.TryParse(FS_select.Items[FS_select.SelectedIndex].ToString(), out viewer.ahrs_wave.Fs);
             double.TryParse(ahrs_corr.Items[ahrs_corr.SelectedIndex].ToString(), out viewer.ahrs_wave.correction_value);
 
+            int tmp;
+            double.TryParse(ahrs_corr_periode.Items[ahrs_corr_periode.SelectedIndex].ToString(), out viewer.ahrs_wave.corrperiod);
+
 
 
             //string val = FS_select.Invoke((MethodInvoker)(() => FS_select.Items[FS_select.SelectedIndex].ToString()));
@@ -220,6 +234,8 @@ namespace AHRS_viewer
                 label_TM02.Invoke((MethodInvoker)(() => label_TM02.Text = "TM02: " + res.T02.ToString("0.00")));
                 label_H3.Invoke((MethodInvoker)(() => label_H3.Text = "H3: " + res.Htier.ToString("0.00")));
                 label_Tz.Invoke((MethodInvoker)(() => label_Tz.Text = "Tz: " + res.Tz.ToString("0.00")));
+                label_sprd.Invoke((MethodInvoker)(() => label_sprd.Text = "SPRD: " + res.Sprd.ToString("0.00")));
+                label_sprd2.Invoke((MethodInvoker)(() => label_sprd2.Text = "SPRD2: " + res.Sprd2.ToString("0.00")));
 
 
                 float[] accel = new float[viewer.ahrs_wave.nsamples];
