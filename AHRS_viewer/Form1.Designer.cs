@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.label_corr = new System.Windows.Forms.Label();
+            this.ahrs_corr = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.FS_select = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.listFileName = new System.Windows.Forms.ListBox();
             this.tChart1 = new Steema.TeeChart.TChart();
             this.fastLine2 = new Steema.TeeChart.Styles.FastLine();
@@ -47,23 +48,61 @@
             this.label_TM02 = new System.Windows.Forms.Label();
             this.label_H3 = new System.Windows.Forms.Label();
             this.label_Tz = new System.Windows.Forms.Label();
-            this.ahrs_corr = new System.Windows.Forms.ComboBox();
-            this.label_corr = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ahrs_corr_periode = new System.Windows.Forms.ComboBox();
+            this.label_sprd = new System.Windows.Forms.Label();
+            this.label_sprd2 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.ahrs_corr_periode);
             this.panel1.Controls.Add(this.label_corr);
             this.panel1.Controls.Add(this.ahrs_corr);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.FS_select);
             this.panel1.Location = new System.Drawing.Point(14, 317);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(220, 76);
+            this.panel1.Size = new System.Drawing.Size(220, 163);
             this.panel1.TabIndex = 0;
+            // 
+            // label_corr
+            // 
+            this.label_corr.AutoSize = true;
+            this.label_corr.Location = new System.Drawing.Point(15, 47);
+            this.label_corr.Name = "label_corr";
+            this.label_corr.Size = new System.Drawing.Size(55, 13);
+            this.label_corr.TabIndex = 11;
+            this.label_corr.Text = "Correction";
+            // 
+            // ahrs_corr
+            // 
+            this.ahrs_corr.FormattingEnabled = true;
+            this.ahrs_corr.Location = new System.Drawing.Point(76, 44);
+            this.ahrs_corr.Name = "ahrs_corr";
+            this.ahrs_corr.Size = new System.Drawing.Size(56, 21);
+            this.ahrs_corr.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(18, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Fs";
+            // 
+            // FS_select
+            // 
+            this.FS_select.FormattingEnabled = true;
+            this.FS_select.Location = new System.Drawing.Point(76, 10);
+            this.FS_select.Name = "FS_select";
+            this.FS_select.Size = new System.Drawing.Size(56, 21);
+            this.FS_select.TabIndex = 0;
             // 
             // button2
             // 
@@ -84,23 +123,6 @@
             this.button1.Text = "open file";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.OpenFile_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Fs";
-            // 
-            // FS_select
-            // 
-            this.FS_select.FormattingEnabled = true;
-            this.FS_select.Location = new System.Drawing.Point(76, 10);
-            this.FS_select.Name = "FS_select";
-            this.FS_select.Size = new System.Drawing.Size(56, 21);
-            this.FS_select.TabIndex = 0;
             // 
             // listFileName
             // 
@@ -363,34 +385,55 @@
             this.label_Tz.TabIndex = 8;
             this.label_Tz.Text = "Tz";
             // 
-            // ahrs_corr
-            // 
-            this.ahrs_corr.FormattingEnabled = true;
-            this.ahrs_corr.Location = new System.Drawing.Point(76, 44);
-            this.ahrs_corr.Name = "ahrs_corr";
-            this.ahrs_corr.Size = new System.Drawing.Size(56, 21);
-            this.ahrs_corr.TabIndex = 10;
-            // 
-            // label_corr
-            // 
-            this.label_corr.AutoSize = true;
-            this.label_corr.Location = new System.Drawing.Point(15, 47);
-            this.label_corr.Name = "label_corr";
-            this.label_corr.Size = new System.Drawing.Size(55, 13);
-            this.label_corr.TabIndex = 11;
-            this.label_corr.Text = "Correction";
-            // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.label_sprd2);
+            this.panel2.Controls.Add(this.label_sprd);
             this.panel2.Controls.Add(this.label_Tz);
             this.panel2.Controls.Add(this.label_H3);
             this.panel2.Controls.Add(this.label_TM02);
             this.panel2.Controls.Add(this.label_Tp);
             this.panel2.Controls.Add(this.label_Hm0);
-            this.panel2.Location = new System.Drawing.Point(14, 399);
+            this.panel2.Location = new System.Drawing.Point(14, 486);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(218, 127);
+            this.panel2.Size = new System.Drawing.Size(218, 151);
             this.panel2.TabIndex = 9;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "CorrPeriod";
+            // 
+            // ahrs_corr_periode
+            // 
+            this.ahrs_corr_periode.FormattingEnabled = true;
+            this.ahrs_corr_periode.Location = new System.Drawing.Point(76, 71);
+            this.ahrs_corr_periode.Name = "ahrs_corr_periode";
+            this.ahrs_corr_periode.Size = new System.Drawing.Size(56, 21);
+            this.ahrs_corr_periode.TabIndex = 12;
+            // 
+            // label_sprd
+            // 
+            this.label_sprd.AutoSize = true;
+            this.label_sprd.Location = new System.Drawing.Point(13, 114);
+            this.label_sprd.Name = "label_sprd";
+            this.label_sprd.Size = new System.Drawing.Size(37, 13);
+            this.label_sprd.TabIndex = 9;
+            this.label_sprd.Text = "SPRD";
+            // 
+            // label_sprd2
+            // 
+            this.label_sprd2.AutoSize = true;
+            this.label_sprd2.Location = new System.Drawing.Point(15, 127);
+            this.label_sprd2.Name = "label_sprd2";
+            this.label_sprd2.Size = new System.Drawing.Size(43, 13);
+            this.label_sprd2.TabIndex = 10;
+            this.label_sprd2.Text = "SPRD2";
+            this.label_sprd2.Click += new System.EventHandler(this.label4_Click);
             // 
             // Form1
             // 
@@ -438,6 +481,10 @@
         private System.Windows.Forms.Label label_corr;
         private System.Windows.Forms.ComboBox ahrs_corr;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox ahrs_corr_periode;
+        private System.Windows.Forms.Label label_sprd2;
+        private System.Windows.Forms.Label label_sprd;
     }
 }
 

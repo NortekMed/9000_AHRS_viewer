@@ -367,5 +367,10 @@ namespace AHRS_viewer
             else
                 listFileName.SetSelected(index, true);
         }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
