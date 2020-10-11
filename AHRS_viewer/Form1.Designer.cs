@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ahrs_corr_periode = new System.Windows.Forms.ComboBox();
             this.label_corr = new System.Windows.Forms.Label();
             this.ahrs_corr = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -49,16 +51,20 @@
             this.label_H3 = new System.Windows.Forms.Label();
             this.label_Tz = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.ahrs_corr_periode = new System.Windows.Forms.ComboBox();
-            this.label_sprd = new System.Windows.Forms.Label();
             this.label_sprd2 = new System.Windows.Forms.Label();
+            this.label_sprd = new System.Windows.Forms.Label();
+            this.label_startbin = new System.Windows.Forms.Label();
+            this.label_endbin = new System.Windows.Forms.Label();
+            this.label_middlebin = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label_middlebin);
+            this.panel1.Controls.Add(this.label_endbin);
+            this.panel1.Controls.Add(this.label_startbin);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.ahrs_corr_periode);
             this.panel1.Controls.Add(this.label_corr);
@@ -69,6 +75,23 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(220, 163);
             this.panel1.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(15, 74);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "CorrPeriod";
+            // 
+            // ahrs_corr_periode
+            // 
+            this.ahrs_corr_periode.FormattingEnabled = true;
+            this.ahrs_corr_periode.Location = new System.Drawing.Point(76, 71);
+            this.ahrs_corr_periode.Name = "ahrs_corr_periode";
+            this.ahrs_corr_periode.Size = new System.Drawing.Size(56, 21);
+            this.ahrs_corr_periode.TabIndex = 12;
             // 
             // label_corr
             // 
@@ -399,32 +422,6 @@
             this.panel2.Size = new System.Drawing.Size(218, 151);
             this.panel2.TabIndex = 9;
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 74);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "CorrPeriod";
-            // 
-            // ahrs_corr_periode
-            // 
-            this.ahrs_corr_periode.FormattingEnabled = true;
-            this.ahrs_corr_periode.Location = new System.Drawing.Point(76, 71);
-            this.ahrs_corr_periode.Name = "ahrs_corr_periode";
-            this.ahrs_corr_periode.Size = new System.Drawing.Size(56, 21);
-            this.ahrs_corr_periode.TabIndex = 12;
-            // 
-            // label_sprd
-            // 
-            this.label_sprd.AutoSize = true;
-            this.label_sprd.Location = new System.Drawing.Point(13, 114);
-            this.label_sprd.Name = "label_sprd";
-            this.label_sprd.Size = new System.Drawing.Size(37, 13);
-            this.label_sprd.TabIndex = 9;
-            this.label_sprd.Text = "SPRD";
-            // 
             // label_sprd2
             // 
             this.label_sprd2.AutoSize = true;
@@ -435,11 +432,47 @@
             this.label_sprd2.Text = "SPRD2";
             this.label_sprd2.Click += new System.EventHandler(this.label4_Click);
             // 
+            // label_sprd
+            // 
+            this.label_sprd.AutoSize = true;
+            this.label_sprd.Location = new System.Drawing.Point(13, 114);
+            this.label_sprd.Name = "label_sprd";
+            this.label_sprd.Size = new System.Drawing.Size(37, 13);
+            this.label_sprd.TabIndex = 9;
+            this.label_sprd.Text = "SPRD";
+            // 
+            // label_startbin
+            // 
+            this.label_startbin.AutoSize = true;
+            this.label_startbin.Location = new System.Drawing.Point(15, 102);
+            this.label_startbin.Name = "label_startbin";
+            this.label_startbin.Size = new System.Drawing.Size(44, 13);
+            this.label_startbin.TabIndex = 14;
+            this.label_startbin.Text = "startbin:";
+            // 
+            // label_endbin
+            // 
+            this.label_endbin.AutoSize = true;
+            this.label_endbin.Location = new System.Drawing.Point(15, 128);
+            this.label_endbin.Name = "label_endbin";
+            this.label_endbin.Size = new System.Drawing.Size(42, 13);
+            this.label_endbin.TabIndex = 15;
+            this.label_endbin.Text = "endbin:";
+            // 
+            // label_middlebin
+            // 
+            this.label_middlebin.AutoSize = true;
+            this.label_middlebin.Location = new System.Drawing.Point(15, 115);
+            this.label_middlebin.Name = "label_middlebin";
+            this.label_middlebin.Size = new System.Drawing.Size(54, 13);
+            this.label_middlebin.TabIndex = 16;
+            this.label_middlebin.Text = "middlebin:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1904, 961);
+            this.ClientSize = new System.Drawing.Size(1604, 881);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.tChart5);
             this.Controls.Add(this.button1);
@@ -485,6 +518,9 @@
         private System.Windows.Forms.ComboBox ahrs_corr_periode;
         private System.Windows.Forms.Label label_sprd2;
         private System.Windows.Forms.Label label_sprd;
+        private System.Windows.Forms.Label label_middlebin;
+        private System.Windows.Forms.Label label_endbin;
+        private System.Windows.Forms.Label label_startbin;
     }
 }
 

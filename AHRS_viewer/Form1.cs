@@ -237,6 +237,25 @@ namespace AHRS_viewer
                 label_sprd.Invoke((MethodInvoker)(() => label_sprd.Text = "SPRD: " + res.Sprd.ToString("0.00")));
                 label_sprd2.Invoke((MethodInvoker)(() => label_sprd2.Text = "SPRD2: " + res.Sprd2.ToString("0.00")));
 
+                double deltaf = viewer.ahrs_wave.Fs / viewer.ahrs_wave.nsamples;
+
+                double tmp_s = Math.Floor((1/deltaf) / res.startbin);
+                if ( viewer.ahrs_wave.bf_detected)
+                    label_startbin.Invoke((MethodInvoker)(() => label_startbin.Text = "startbin: " + res.startbin.ToString("0")
+                                                                    + " (" + tmp_s.ToString("0.0") + "s)" + " FILTER NOT ACTIVED"));
+                else 
+                    label_startbin.Invoke((MethodInvoker)(() => label_startbin.Text = "startbin: " + res.startbin.ToString("0") 
+                                                                    + " (" + tmp_s.ToString("0.0") + "s)" + " FILTER ACTIVED"
+                                                                    + " (" + viewer.ahrs_wave.memo_startbin.ToString() + ")"));
+
+                tmp_s = (int)Math.Floor( (1 / deltaf) / res.middlebin);
+                label_middlebin.Invoke((MethodInvoker)(() => label_middlebin.Text = "middlebin: " + res.middlebin.ToString("0") 
+                                                                + " (" + tmp_s.ToString("0.0") + "s)" ));
+
+                tmp_s = (int)Math.Floor( (1 / deltaf) / res.endbin);
+                label_endbin.Invoke((MethodInvoker)(() => label_endbin.Text = "endbin: " + res.endbin.ToString("0")
+                                                                + " (" + tmp_s.ToString() + "s)"));
+
 
                 float[] accel = new float[viewer.ahrs_wave.nsamples];
                 double[] timing = new double[viewer.ahrs_wave.nsamples];
@@ -250,7 +269,7 @@ namespace AHRS_viewer
                 fastLine1.Add(timing, accel);
 
 
-                double deltaf = viewer.ahrs_wave.Fs / viewer.ahrs_wave.nsamples;
+                
                 for (int i = 0; i < viewer.ahrs_wave.nsamples; i++)
                 {
                     timing[i] = i * deltaf;

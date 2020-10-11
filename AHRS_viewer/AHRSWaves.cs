@@ -47,6 +47,14 @@ namespace nortekmed.ahrs {
         public double correction_value;
         public double corrperiod;
 
+        public int initbin = 0;
+        public int startbin = 0;
+        public int memo_startbin = 0;
+        public int middlebin = 0;
+        public int endbin = 0;
+
+        public bool bf_detected = false;
+
         public AccAngularRateMagVectorOrientationMatrix[] samples;
 
         bool disposed = false;
@@ -189,8 +197,8 @@ namespace nortekmed.ahrs {
 
             double[] log_czz = new double[samples.Length];
 
-            int initbin = 0;
-            int startbin = 0;
+            initbin = 0;
+            startbin = 0;
 
             WavesProcessingResult processingresult;
 
@@ -347,22 +355,65 @@ namespace nortekmed.ahrs {
                 crosscorrelate(czz, qzz, NFFT, deltaF);
                 // determine starting low frequency
                 // first find max of log10(first 20 bins)
-                double maxlog10firstbins = double.MinValue;
+                //double maxlog10firstbins = double.MinValue;
                 //int initbin = (int)Math.Ceiling(0.033 / deltaF);
-                initbin = 10;
+                //initbin = 10;
 
 
-                startbin = 34;
+                //for (int i = 1; i < initbin; i++)
+                //{
+                //    double tmp = 10 * Math.Log10(czz[i]);
+                //    if (tmp > maxlog10firstbins) maxlog10firstbins = tmp;
+                //}
+                // then find first bins bigger
+                //startbin = 0;
+                //startbin = 34; //34: 30s; 51: 20s
+
+                
+
+
 
                 int corrbin = (int)Math.Floor((1 / corrperiod) / deltaF);
                 
 
                 // middlebin is abitrary 10s
                 double middle_period = 10;
-                int middlebin = (int)Math.Floor((1 / middle_period) / deltaF);
+                middlebin = (int)Math.Floor((1 / middle_period) / deltaF);
+
+
+                // Compute startbin /////////////////////////////////////
+                double maxlog10firstbins = double.MinValue;
+                initbin = 42;
+                // Memorize max level of 42 first bin
+                for (int i = 1; i < initbin; i++)
+                {
+                    double tmp = 10 * Math.Log10(czz[i]);
+                    if (tmp > maxlog10firstbins) maxlog10firstbins = tmp;
+                }
+                // then find first bins bigger
+                startbin = 0;
+                for (int i = initbin; i < NFFT / 2; i++)
+                {
+                    if (10 * Math.Log10(czz[i]) > maxlog10firstbins + 8)
+                    {
+                        startbin = i;
+                        break;
+                    }
+                }
+                memo_startbin = startbin; // to display
+
+                bf_detected = false;
+                if ((startbin < middlebin) && (startbin != 0))
+                    bf_detected = true;
+                else
+                    startbin = 42; // =24s
+                //////////////////////////////////////////////////////////
+                ///
+
 
                 // endbin is abitrary 1.4s
-                int endbin = (int)Math.Floor((1 / 1.4) / deltaF);
+                endbin = (int)Math.Floor((1 / 1.4) / deltaF);
+
 
                 // calculate the omega vector
                 //omega=2*pi*([0:NFFT-1]*deltaf);
@@ -416,14 +467,17 @@ namespace nortekmed.ahrs {
                 {
 
                     // Apply AHRS correction
-                    if (i <= corrbin)
+                    if (!bf_detected)
                     {
-                        ahrs_correction = -(correction_value / middlebin) * (middlebin - i);
-                        //ahrs_correction = -(30.0 / middlebin) * (middlebin - i);
-                        //ahrs_correction = -(25 / middlebin) * (middlebin - i);
+                        if (i <= corrbin)
+                        {
+                            ahrs_correction = -(correction_value / middlebin) * (middlebin - i);
+                            //ahrs_correction = -(30.0 / middlebin) * (middlebin - i);
+                            //ahrs_correction = -(25 / middlebin) * (middlebin - i);
+                        }
+                        else
+                            ahrs_correction = 0;
                     }
-                    else
-                        ahrs_correction = 0;
 
                     if (ahrs_correction != 0)
                     {
