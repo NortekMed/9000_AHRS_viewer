@@ -229,6 +229,15 @@ namespace AHRS_viewer
             {
                 //viewer.wave_results.Add(res);
 
+                string res_sprd = "";
+                res_sprd += "sprd2= " + res.Sprd2.ToString("0.00") + "\r\n";
+                res_sprd += "qzx= " + res.calc_sprd[1].ToString("0.000000") + "\r\n";
+                res_sprd += "qzy= " + res.calc_sprd[2].ToString("0.000000") + "\r\n";
+                res_sprd += "czz= " + res.calc_sprd[3].ToString("0.000000") + "\r\n";
+                res_sprd += "cxx= " + res.calc_sprd[4].ToString("0.000000") + "\r\n";
+                res_sprd += "cyy= " + res.calc_sprd[5].ToString("0.000000") + "\r\n";
+                textBox_sprd_val.Invoke((MethodInvoker)(() => textBox_sprd_val.Text = res_sprd));
+
                 label_Hm0.Invoke((MethodInvoker)(() => label_Hm0.Text = "Hm0: " + res.Hm0.ToString("0.00")));
                 label_Tp.Invoke((MethodInvoker)(() => label_Tp.Text = "Tp: " + res.Tp.ToString("0.00")));
                 label_TM02.Invoke((MethodInvoker)(() => label_TM02.Text = "TM02: " + res.T02.ToString("0.00")));
@@ -295,6 +304,11 @@ namespace AHRS_viewer
                 fastLine5.Add(timing, viewer.ahrs_wave.final_czz);
                 fastLine5.Title = "Czz: omega + ahrs correction";
                 fastLine5.Legend.Visible = true;
+
+                fastLine6.Clear();
+                fastLine6.Add(timing, viewer.ahrs_wave.sprd_tab);
+                fastLine6.Title = "Sprd";
+                fastLine6.Legend.Visible = true;
 
                 tChart1.Legend.Visible = true;
 
@@ -391,5 +405,6 @@ namespace AHRS_viewer
         {
 
         }
+
     }
 }

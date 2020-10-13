@@ -37,6 +37,7 @@ namespace nortekmed.ahrs {
         public delegate void register_result(WavesProcessingResult res);
         public event register_result register_result_evt;
 
+        public double[] sprd_tab = new double[4096];
         public double[] final_czz = new double[4096];
         public double[] raw_czz = new double[4096];
         public double[] omega_czz = new double[4096];
@@ -717,7 +718,7 @@ namespace nortekmed.ahrs {
                 calc_spread[0] = indextp;
                 calc_spread[1] = qzx[indextp];
                 calc_spread[2] = qzy[indextp];
-                calc_spread[3] = omega[indextp];// Math.Pow(omega[indextp], 4) * czz[indextp];
+                calc_spread[3] = czz_raw[indextp];// Math.Pow(omega[indextp], 4) * czz[indextp];
                 calc_spread[4] = cxx[indextp];
                 calc_spread[5] = cyy[indextp];
 
@@ -751,6 +752,30 @@ namespace nortekmed.ahrs {
                 }
 
                 sprd /= 2; // ... datawell result ...
+                sprd2 /= 2; // ... datawell result ...
+
+
+                for ( int i = 1; i < endbin; i++)
+                {
+                    C = Math.Pow(qzx[i], 2) + Math.Pow(qzy[i], 2);
+                    D2 = czz_raw[i] * (cxx[i] + cyy[i]);
+                    if (D2 == 0)
+                    {
+                        sprd2 = 0;
+                    }
+                    else
+                    {
+                        M2 = Math.Sqrt(C / D2);
+
+                        if (M2 < 1)
+                            sprd_tab[i] = 180 * Math.Sqrt(2 - 2 * M2) / Math.PI;
+                        else
+                            sprd_tab[i] = 0;
+                    }
+                
+                }
+
+
 
                 double[] MainDir = new double[NBins];
                 for (int i = 0; i < MainDir.Length; i++)

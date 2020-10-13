@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label_middlebin = new System.Windows.Forms.Label();
+            this.label_endbin = new System.Windows.Forms.Label();
+            this.label_startbin = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.ahrs_corr_periode = new System.Windows.Forms.ComboBox();
             this.label_corr = new System.Windows.Forms.Label();
@@ -53,11 +56,17 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label_sprd2 = new System.Windows.Forms.Label();
             this.label_sprd = new System.Windows.Forms.Label();
-            this.label_startbin = new System.Windows.Forms.Label();
-            this.label_endbin = new System.Windows.Forms.Label();
-            this.label_middlebin = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBox_sprd_val = new System.Windows.Forms.TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.fastLine6 = new Steema.TeeChart.Styles.FastLine();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -71,10 +80,37 @@
             this.panel1.Controls.Add(this.ahrs_corr);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.FS_select);
-            this.panel1.Location = new System.Drawing.Point(14, 317);
+            this.panel1.Location = new System.Drawing.Point(15, 213);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(220, 163);
+            this.panel1.Size = new System.Drawing.Size(230, 163);
             this.panel1.TabIndex = 0;
+            // 
+            // label_middlebin
+            // 
+            this.label_middlebin.AutoSize = true;
+            this.label_middlebin.Location = new System.Drawing.Point(15, 115);
+            this.label_middlebin.Name = "label_middlebin";
+            this.label_middlebin.Size = new System.Drawing.Size(54, 13);
+            this.label_middlebin.TabIndex = 16;
+            this.label_middlebin.Text = "middlebin:";
+            // 
+            // label_endbin
+            // 
+            this.label_endbin.AutoSize = true;
+            this.label_endbin.Location = new System.Drawing.Point(15, 128);
+            this.label_endbin.Name = "label_endbin";
+            this.label_endbin.Size = new System.Drawing.Size(42, 13);
+            this.label_endbin.TabIndex = 15;
+            this.label_endbin.Text = "endbin:";
+            // 
+            // label_startbin
+            // 
+            this.label_startbin.AutoSize = true;
+            this.label_startbin.Location = new System.Drawing.Point(15, 102);
+            this.label_startbin.Name = "label_startbin";
+            this.label_startbin.Size = new System.Drawing.Size(44, 13);
+            this.label_startbin.TabIndex = 14;
+            this.label_startbin.Text = "startbin:";
             // 
             // label2
             // 
@@ -139,7 +175,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(140, 12);
+            this.button1.Location = new System.Drawing.Point(151, 12);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(94, 29);
             this.button1.TabIndex = 8;
@@ -153,7 +189,7 @@
             this.listFileName.Location = new System.Drawing.Point(14, 47);
             this.listFileName.Name = "listFileName";
             this.listFileName.ScrollAlwaysVisible = true;
-            this.listFileName.Size = new System.Drawing.Size(221, 264);
+            this.listFileName.Size = new System.Drawing.Size(231, 160);
             this.listFileName.TabIndex = 0;
             this.listFileName.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.File_Selected);
             // 
@@ -192,7 +228,7 @@
             // 
             // 
             this.tChart1.Legend.Visible = false;
-            this.tChart1.Location = new System.Drawing.Point(238, 309);
+            this.tChart1.Location = new System.Drawing.Point(251, 311);
             this.tChart1.Name = "tChart1";
             // 
             // 
@@ -205,6 +241,7 @@
             this.tChart1.Series.Add(this.fastLine3);
             this.tChart1.Series.Add(this.fastLine4);
             this.tChart1.Series.Add(this.fastLine5);
+            this.tChart1.Series.Add(this.fastLine6);
             this.tChart1.Size = new System.Drawing.Size(984, 304);
             this.tChart1.TabIndex = 3;
             this.tChart1.DoubleClick += new System.EventHandler(this.tChart1_DClick);
@@ -328,7 +365,7 @@
             // 
             // 
             this.tChart5.Legend.Visible = false;
-            this.tChart5.Location = new System.Drawing.Point(238, 3);
+            this.tChart5.Location = new System.Drawing.Point(251, 5);
             this.tChart5.Name = "tChart5";
             // 
             // 
@@ -417,7 +454,7 @@
             this.panel2.Controls.Add(this.label_TM02);
             this.panel2.Controls.Add(this.label_Tp);
             this.panel2.Controls.Add(this.label_Hm0);
-            this.panel2.Location = new System.Drawing.Point(14, 486);
+            this.panel2.Location = new System.Drawing.Point(3, 6);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(218, 151);
             this.panel2.TabIndex = 9;
@@ -441,39 +478,80 @@
             this.label_sprd.TabIndex = 9;
             this.label_sprd.Text = "SPRD";
             // 
-            // label_startbin
+            // tabControl1
             // 
-            this.label_startbin.AutoSize = true;
-            this.label_startbin.Location = new System.Drawing.Point(15, 102);
-            this.label_startbin.Name = "label_startbin";
-            this.label_startbin.Size = new System.Drawing.Size(44, 13);
-            this.label_startbin.TabIndex = 14;
-            this.label_startbin.Text = "startbin:";
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(15, 382);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(234, 231);
+            this.tabControl1.TabIndex = 10;
             // 
-            // label_endbin
+            // tabPage1
             // 
-            this.label_endbin.AutoSize = true;
-            this.label_endbin.Location = new System.Drawing.Point(15, 128);
-            this.label_endbin.Name = "label_endbin";
-            this.label_endbin.Size = new System.Drawing.Size(42, 13);
-            this.label_endbin.TabIndex = 15;
-            this.label_endbin.Text = "endbin:";
+            this.tabPage1.Controls.Add(this.panel2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(226, 205);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Waves";
+            this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // label_middlebin
+            // tabPage2
             // 
-            this.label_middlebin.AutoSize = true;
-            this.label_middlebin.Location = new System.Drawing.Point(15, 115);
-            this.label_middlebin.Name = "label_middlebin";
-            this.label_middlebin.Size = new System.Drawing.Size(54, 13);
-            this.label_middlebin.TabIndex = 16;
-            this.label_middlebin.Text = "middlebin:";
+            this.tabPage2.Controls.Add(this.textBox_sprd_val);
+            this.tabPage2.Controls.Add(this.textBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(226, 205);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Spread";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // textBox_sprd_val
+            // 
+            this.textBox_sprd_val.Location = new System.Drawing.Point(0, 91);
+            this.textBox_sprd_val.Multiline = true;
+            this.textBox_sprd_val.Name = "textBox_sprd_val";
+            this.textBox_sprd_val.Size = new System.Drawing.Size(225, 113);
+            this.textBox_sprd_val.TabIndex = 1;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(0, 0);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(226, 89);
+            this.textBox1.TabIndex = 0;
+            this.textBox1.Text = "spread formula: \r\nsprd = sqrt(2-2M)    ( *180/pi for °)\r\nM=sqrt( C/ D )\r\nwith C =" +
+    " qzx[iTp]^2 + qzy[iTp]^2\r\n         D = czz_raw[iTp] * ( cxx[iTp] + cyy[iTp] )\r\n";
+            // 
+            // fastLine6
+            // 
+            this.fastLine6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(64)))), ((int)(((byte)(107)))));
+            this.fastLine6.ColorEach = false;
+            // 
+            // 
+            // 
+            this.fastLine6.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(64)))), ((int)(((byte)(107)))));
+            this.fastLine6.OriginalCursor = null;
+            this.fastLine6.Title = "fastLine5";
+            this.fastLine6.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
+            // 
+            // 
+            // 
+            this.fastLine6.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1604, 881);
-            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.tChart5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
@@ -487,6 +565,10 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -521,6 +603,12 @@
         private System.Windows.Forms.Label label_middlebin;
         private System.Windows.Forms.Label label_endbin;
         private System.Windows.Forms.Label label_startbin;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox textBox_sprd_val;
+        private System.Windows.Forms.TextBox textBox1;
+        private Steema.TeeChart.Styles.FastLine fastLine6;
     }
 }
 
