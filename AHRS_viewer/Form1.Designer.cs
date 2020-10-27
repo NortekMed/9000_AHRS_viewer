@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label_middlebin = new System.Windows.Forms.Label();
             this.label_endbin = new System.Windows.Forms.Label();
@@ -47,8 +48,6 @@
             this.fastLine4 = new Steema.TeeChart.Styles.FastLine();
             this.fastLine5 = new Steema.TeeChart.Styles.FastLine();
             this.fastLine6 = new Steema.TeeChart.Styles.FastLine();
-            this.tChart5 = new Steema.TeeChart.TChart();
-            this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
             this.label_Hm0 = new System.Windows.Forms.Label();
             this.label_Tp = new System.Windows.Forms.Label();
             this.label_TM02 = new System.Windows.Forms.Label();
@@ -66,6 +65,8 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tChart2 = new Steema.TeeChart.TChart();
+            this.tChart5 = new Steema.TeeChart.TChart();
+            this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -351,77 +352,12 @@
             // 
             // 
             // 
+            this.fastLine6.XValues.DataMember = "X";
             this.fastLine6.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
             // 
-            // tChart5
             // 
             // 
-            // 
-            // 
-            this.tChart5.Aspect.View3D = false;
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.tChart5.Axes.Bottom.Title.Caption = "seconde";
-            this.tChart5.Axes.Bottom.Title.Lines = new string[] {
-        "seconde"};
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.tChart5.Axes.Left.Title.Caption = "m/s^2";
-            this.tChart5.Axes.Left.Title.Lines = new string[] {
-        "m/s^2"};
-            // 
-            // 
-            // 
-            this.tChart5.Header.Visible = false;
-            // 
-            // 
-            // 
-            this.tChart5.Legend.Visible = false;
-            this.tChart5.Location = new System.Drawing.Point(6, 10);
-            this.tChart5.Name = "tChart5";
-            // 
-            // 
-            // 
-            this.tChart5.Panel.MarginBottom = 0D;
-            this.tChart5.Panel.MarginLeft = 1D;
-            this.tChart5.Panel.MarginRight = 1D;
-            this.tChart5.Panel.MarginTop = 2D;
-            this.tChart5.Series.Add(this.fastLine1);
-            this.tChart5.Size = new System.Drawing.Size(984, 300);
-            this.tChart5.TabIndex = 2;
-            this.tChart5.DoubleClick += new System.EventHandler(this.tChart5_DClick);
-            // 
-            // fastLine1
-            // 
-            this.fastLine1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
-            this.fastLine1.ColorEach = false;
-            // 
-            // 
-            // 
-            this.fastLine1.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
-            this.fastLine1.OriginalCursor = null;
-            this.fastLine1.Title = "fastLine1";
-            this.fastLine1.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
-            // 
-            // 
-            // 
-            this.fastLine1.XValues.DataMember = "X";
-            this.fastLine1.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
-            // 
-            // 
-            // 
-            this.fastLine1.YValues.DataMember = "Y";
+            this.fastLine6.YValues.DataMember = "Y";
             // 
             // label_Hm0
             // 
@@ -630,9 +566,72 @@
             this.tChart2.Panel.MarginLeft = 1D;
             this.tChart2.Panel.MarginRight = 1D;
             this.tChart2.Panel.MarginTop = 2D;
-            this.tChart2.Series.Add(this.fastLine1);
             this.tChart2.Size = new System.Drawing.Size(984, 300);
             this.tChart2.TabIndex = 3;
+            // 
+            // tChart5
+            // 
+            // 
+            // 
+            // 
+            this.tChart5.Aspect.View3D = false;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.tChart5.Axes.Bottom.Title.Caption = "seconde";
+            this.tChart5.Axes.Bottom.Title.Lines = new string[] {
+        "seconde"};
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.tChart5.Axes.Left.Title.Caption = "m/s^2";
+            this.tChart5.Axes.Left.Title.Lines = new string[] {
+        "m/s^2"};
+            // 
+            // 
+            // 
+            this.tChart5.Header.Visible = false;
+            // 
+            // 
+            // 
+            this.tChart5.Legend.Visible = false;
+            this.tChart5.Location = new System.Drawing.Point(6, 10);
+            this.tChart5.Name = "tChart5";
+            // 
+            // 
+            // 
+            this.tChart5.Panel.MarginBottom = 0D;
+            this.tChart5.Panel.MarginLeft = 1D;
+            this.tChart5.Panel.MarginRight = 1D;
+            this.tChart5.Panel.MarginTop = 2D;
+            this.tChart5.Series.Add(this.fastLine1);
+            this.tChart5.Size = new System.Drawing.Size(984, 300);
+            this.tChart5.TabIndex = 4;
+            // 
+            // fastLine1
+            // 
+            this.fastLine1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
+            this.fastLine1.ColorEach = false;
+            // 
+            // 
+            // 
+            this.fastLine1.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
+            this.fastLine1.OriginalCursor = null;
+            this.fastLine1.Title = "fastLine1";
+            this.fastLine1.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
+            // 
+            // 
+            // 
+            this.fastLine1.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
             // 
             // Form1
             // 
@@ -672,11 +671,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private Steema.TeeChart.TChart tChart1;
-        private Steema.TeeChart.TChart tChart5;
         private Steema.TeeChart.Styles.FastLine fastLine2;
         private Steema.TeeChart.Styles.FastLine fastLine3;
         private Steema.TeeChart.Styles.FastLine fastLine4;
-        private Steema.TeeChart.Styles.FastLine fastLine1;
         private Steema.TeeChart.Styles.FastLine fastLine5;
         private System.Windows.Forms.Label label_Hm0;
         private System.Windows.Forms.Label label_Tp;
@@ -703,6 +700,8 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private Steema.TeeChart.TChart tChart2;
+        private Steema.TeeChart.TChart tChart5;
+        private Steema.TeeChart.Styles.FastLine fastLine1;
     }
 }
 
