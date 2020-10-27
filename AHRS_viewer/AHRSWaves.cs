@@ -7,7 +7,8 @@ using System.Threading;
 using System.IO;
 using System.Diagnostics;
 
-namespace nortekmed.ahrs {
+namespace nortekmed.ahrs
+{
 
     public struct AccAngularRateMagVectorOrientationMatrix
     {
@@ -32,7 +33,8 @@ namespace nortekmed.ahrs {
 
     }
 
-    public class AHRSWaves {
+    public class AHRSWaves
+    {
 
         public delegate void register_result(WavesProcessingResult res);
         public event register_result register_result_evt;
@@ -44,6 +46,20 @@ namespace nortekmed.ahrs {
         public double[] corrected_czz = new double[4096];
         public double[] t2_ahrs_correction = new double[4096];
         public double[] t_ahrs_correction = new double[4096];
+
+        public double[] a1_tab = new double[4096];
+        public double[] b1_tab = new double[4096];
+        public double[] a2_tab = new double[4096];
+        public double[] b2_tab = new double[4096];
+        public double[] a0_tab = new double[4096];
+
+        public double[] r1_tab = new double[4096];
+        public double[] r2_tab = new double[4096];
+        public double[] teta1_tab = new double[4096];
+        public double[] teta2_tab = new double[4096];
+
+        public double[,] DSF = new double[4096, 360];
+
 
         public double correction_value;
         public double corrperiod;
@@ -96,13 +112,15 @@ namespace nortekmed.ahrs {
         //public int Fs = 4;
         public double Fs = 4.0;
 
-        
-        ~AHRSWaves() {
+
+        ~AHRSWaves()
+        {
 
         }
 
-        
-        public AHRSWaves() {
+
+        public AHRSWaves()
+        {
             protect = new object();
             state = State.idle;
             //control = null;
@@ -111,15 +129,18 @@ namespace nortekmed.ahrs {
             //                        System.Threading.Timeout.Infinite);
         }
 
-        public State Status {
-            get {
-                lock (protect) {
+        public State Status
+        {
+            get
+            {
+                lock (protect)
+                {
                     return state;
                 }
             }
         }
 
-        
+
         private double freqstart;
         private double[] correctionvector;
         double DeltaFreq;
@@ -133,11 +154,15 @@ namespace nortekmed.ahrs {
         }
 
 
-            double[] multiplyByMatrix33(double[,] matrix, float[] vector) {
+        double[] multiplyByMatrix33(double[,] matrix, float[] vector)
+        {
 
-            if (matrix == null) {
+            if (matrix == null)
+            {
                 return null;
-            } else {
+            }
+            else
+            {
                 double[] m = new double[3];
                 m[0] = vector[0] * matrix[0, 0] + vector[1] * matrix[0, 1] + vector[2] * matrix[0, 2];
                 m[1] = vector[0] * matrix[1, 0] + vector[1] * matrix[1, 1] + vector[2] * matrix[1, 2];
@@ -147,7 +172,8 @@ namespace nortekmed.ahrs {
 
         }
 
-        double[] vectorminusvector(float[] m1, double[] m2) {
+        double[] vectorminusvector(float[] m1, double[] m2)
+        {
             double[] res = new double[3];
 
             res[0] = (double)m1[0] - (double)m2[0];
@@ -156,7 +182,8 @@ namespace nortekmed.ahrs {
             return res;
         }
 
-        double[,] inverseMatrix33(float[,] m) {
+        double[,] inverseMatrix33(float[,] m)
+        {
             /// | a11 a12 a13 |-1             |   a33a22-a32a23  -(a33a12-a32a13)   a23a12-a22a13  |
             /// | a21 a22 a23 |    =  1/DET * | -(a33a21-a31a23)   a33a11-a31a13  -(a23a11-a21a13) |
             /// | a31 a32 a33 |               |   a32a21-a31a22  -(a32a11-a31a12)   a22a11-a21a12  |
@@ -170,8 +197,10 @@ namespace nortekmed.ahrs {
             mp[1, 0] = -((double)m[2, 2] * (double)m[1, 0] - (double)m[2, 0] * (double)m[1, 2]); mp[1, 1] = ((double)m[2, 2] * (double)m[0, 0] - (double)m[2, 0] * (double)m[0, 2]); mp[1, 2] = -((double)m[1, 2] * (double)m[0, 0] - (double)m[1, 0] * (double)m[0, 2]);
             mp[2, 0] = ((double)m[2, 1] * (double)m[1, 0] - (double)m[2, 0] * (double)m[1, 1]); mp[2, 1] = -((double)m[2, 1] * (double)m[0, 0] - (double)m[2, 0] * (double)m[0, 1]); mp[2, 2] = ((double)m[1, 1] * (double)m[0, 0] - (double)m[1, 0] * (double)m[0, 1]);
 
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
                     mp[i, j] = mp[i, j] / det;
                     if (double.IsInfinity(mp[i, j]) || double.IsNaN(mp[i, j])) return null;
                 }
@@ -183,7 +212,7 @@ namespace nortekmed.ahrs {
         }
 
 
-        
+
 
         void processingThreadWaves()
         {
@@ -304,7 +333,7 @@ namespace nortekmed.ahrs {
                 //}
 
                 // acceleration logged are already transformed with orientation matrix
-                for(int i = 0; i < samples.Length; i++)
+                for (int i = 0; i < samples.Length; i++)
                 {
                     acc_x[i] = samples[i].accelerations[0];
                     acc_y[i] = samples[i].accelerations[1];
@@ -370,12 +399,12 @@ namespace nortekmed.ahrs {
                 //startbin = 0;
                 //startbin = 34; //34: 30s; 51: 20s
 
-                
+
 
 
 
                 int corrbin = (int)Math.Floor((1 / corrperiod) / deltaF);
-                
+
 
                 // middlebin is abitrary 10s
                 double middle_period = 10;
@@ -415,11 +444,18 @@ namespace nortekmed.ahrs {
                 // endbin is abitrary 1.4s
                 endbin = (int)Math.Floor((1 / 1.4) / deltaF);
 
-
+                double g = 9.81;
+                double h = 20.0;
                 // calculate the omega vector
                 //omega=2*pi*([0:NFFT-1]*deltaf);
                 double[] omega = new double[1 + NFFT / 2];
-                for (int i = 1; i < NFFT / 2; i++) { omega[i] = 2 * Math.PI * i * deltaF; }
+                double[] k = new double[1 + NFFT / 2];
+                for (int i = 1; i < NFFT / 2; i++)
+                {
+                    omega[i] = 2 * Math.PI * i * deltaF;
+                    omega[i] = 2 * Math.PI * i * deltaF;
+                    k[i] = (2 * Math.PI) / (i * deltaF * Math.Sqrt(g * h));
+                }
 
 
                 //double[] czz_bf = new double[middlebin+1];
@@ -462,7 +498,9 @@ namespace nortekmed.ahrs {
                 double sumovery_hf = 0;
 
                 double ahrs_correction = 0;
-                
+
+
+
 
                 for (int i = 0; i < NFFT; i++)
                 {
@@ -556,9 +594,29 @@ namespace nortekmed.ahrs {
                         corrected_czz[i] = Math.Pow(10, log_czz[i] / 10);           // for register in file  
 
 
+
+
+                        a0_tab[i] = czz[i] / Math.PI;
+
+                        a1_tab[i] = -qzx[i] / (Math.PI * Math.Pow(omega[i], 2)) * k[i];
+                        b1_tab[i] = -qzy[i] / (Math.PI * Math.Pow(omega[i], 2)) * k[i];
+
+                        a2_tab[i] = (cxx[i] - cyy[i]) / (Math.PI * Math.Pow(k[i], 2));
+                        b2_tab[i] = (2 * cxy[i]) / (Math.PI * Math.Pow(k[i], 2));
+
+                        r1_tab[i] = Math.Sqrt(Math.Pow(a1_tab[i], 2) + Math.Pow(b1_tab[i], 2)) / a0_tab[i];
+                        r2_tab[i] = Math.Sqrt(Math.Pow(a2_tab[i], 2) + Math.Pow(b2_tab[i], 2)) / a0_tab[i];
+
+                        teta1_tab[i] = Math.Atan2(b1_tab[i], a1_tab[i]);
+                        teta2_tab[i] = 0.5 * Math.Atan2(b2_tab[i], a2_tab[i]);
+
+                        for (int teta = 0; teta < 360; teta++)
+                        {
+                            DSF[i, teta] = (0.5 + r1_tab[i] * Math.Cos(teta * Math.PI / 180.0 - teta1_tab[i]) + r2_tab[i]
+                                            * Math.Cos(2.0 * (teta * Math.PI / 180.0 - teta2_tab[i]))) / Math.PI;
+                        }
+
                         czz[i] = corrected_czz[i];                                   // return in linear view
-
-
 
                         //czz[i] += ahrs_correction;
 
@@ -755,7 +813,7 @@ namespace nortekmed.ahrs {
                 sprd2 /= 2; // ... datawell result ...
 
 
-                for ( int i = 1; i < endbin; i++)
+                for (int i = 1; i < endbin; i++)
                 {
                     C = Math.Pow(qzx[i], 2) + Math.Pow(qzy[i], 2);
                     D2 = czz_raw[i] * (cxx[i] + cyy[i]);
@@ -772,7 +830,7 @@ namespace nortekmed.ahrs {
                         else
                             sprd_tab[i] = 0;
                     }
-                
+
                 }
 
 
@@ -1054,12 +1112,12 @@ namespace nortekmed.ahrs {
                 this.raw_czz = lraw_czz;
                 //this.raw_czz = raw_czz;
 
-                if (register_result_evt!=null) register_result_evt(processingresult);
+                if (register_result_evt != null) register_result_evt(processingresult);
 
                 //AHRSWavesEventArgs evtf = new AHRSWavesEventArgs(AHRSWavesEventArgs.KindOfEvent.processingfinished);
                 //evtf.Processingresult = processingresult;
 
-                    //fireOnotherThreadEvent(evtf);
+                //fireOnotherThreadEvent(evtf);
 
             }
             catch (Exception ex)
@@ -1116,9 +1174,9 @@ namespace nortekmed.ahrs {
 
 
 
-            
 
-            
+
+
 
         }
 
@@ -1128,10 +1186,12 @@ namespace nortekmed.ahrs {
 
 
         //static 
-        void minmaxArray(double[] value, int istart, int iend, ref double min, ref double max) {
+        void minmaxArray(double[] value, int istart, int iend, ref double min, ref double max)
+        {
             min = double.MaxValue;
             max = double.MinValue;
-            for (int i = istart; i <= iend; i++) {
+            for (int i = istart; i <= iend; i++)
+            {
                 if (value[i] > max) max = value[i];
                 if (value[i] < min) min = value[i];
             }
@@ -1144,12 +1204,14 @@ namespace nortekmed.ahrs {
         /// <param name="Y_Q">Y of length NFFT is modified -> Qxy on first NFFT/2</param>
         /// <param name="NFFT"></param>
         /// <param name="deltaF"></param>
-        void crosscorrelate(double[] X_C, double[] Y_Q, int NFFT, double deltaF) {
+        void crosscorrelate(double[] X_C, double[] Y_Q, int NFFT, double deltaF)
+        {
             Exocortex.DSP.Fourier.RFFT(X_C, NFFT, Exocortex.DSP.FourierDirection.Forward);
             Exocortex.DSP.Fourier.RFFT(Y_Q, NFFT, Exocortex.DSP.FourierDirection.Forward);
             X_C[0] = X_C[0] * Y_Q[0];
             Y_Q[0] = 0.0;
-            for (int i = 1; i < NFFT / 2; i++) {
+            for (int i = 1; i < NFFT / 2; i++)
+            {
                 // imag inversé par rapport a matlab donc - devant
                 X_C[i] = X_C[2 * i] * Y_Q[2 * i] + (-X_C[2 * i + 1]) * (-Y_Q[2 * i + 1]);
                 Y_Q[i] = (-X_C[2 * i + 1]) * Y_Q[2 * i] - X_C[2 * i] * (-Y_Q[2 * i + 1]);
@@ -1180,7 +1242,8 @@ namespace nortekmed.ahrs {
         //
         // Rescale spectra
         //
-        void RescaleSpectra(double[] OriginSpectra, double FsOriginal, double FreqStart, double DeltaF, int NBins, out double[] NewSpectra) {
+        void RescaleSpectra(double[] OriginSpectra, double FsOriginal, double FreqStart, double DeltaF, int NBins, out double[] NewSpectra)
+        {
             //deltaf=FsOriginal/length(OriginSpectra);
             double deltaforiginal = FsOriginal / OriginSpectra.Length;
             NewSpectra = new double[NBins];
@@ -1193,9 +1256,11 @@ namespace nortekmed.ahrs {
             //currentbin = floor(0.5 + currentfrequency / deltaf);
             int currentbin = (int)Math.Floor(0.5 + currentfrequency / deltaforiginal);
             //while (n < Nbins)
-            while (n < NBins) {
+            while (n < NBins)
+            {
                 //    if ((Freqstart+(n+0.5)*DeltaF)>( (currentbin + 0.5) * deltaf))
-                if ((FreqStart + (n + 0.5) * DeltaF) > ((currentbin + 0.5) * deltaforiginal)) {
+                if ((FreqStart + (n + 0.5) * DeltaF) > ((currentbin + 0.5) * deltaforiginal))
+                {
                     //        newspectra(n+1) =newspectra(n+1)+ OriginSpectra(abs(currentbin)+1) * ((currentbin + 0.5) * deltaf - currentfrequency);
                     NewSpectra[n] = NewSpectra[n] + OriginSpectra[Math.Abs(currentbin)] * ((currentbin + 0.5) * deltaforiginal - currentfrequency);
                     //        currentfrequency=(currentbin+0.5)*deltaf;
@@ -1203,8 +1268,9 @@ namespace nortekmed.ahrs {
                     //        currentbin=currentbin+1;
                     currentbin = currentbin + 1;
                 }
-                    //    else
-                else {
+                //    else
+                else
+                {
                     //        newspectra(n+1) = newspectra(n+1)+OriginSpectra(abs(currentbin)+1) * (Freqstart+(n + 0.5) * DeltaF - currentfrequency);
                     NewSpectra[n] = NewSpectra[n] + OriginSpectra[Math.Abs(currentbin)] * (FreqStart + (n + 0.5) * DeltaF - currentfrequency);
                     //        newspectra(n+1) = newspectra(n+1) / DeltaF;
@@ -1222,7 +1288,8 @@ namespace nortekmed.ahrs {
         }
 
     }
-    public struct WavesProcessingResult {
+    public struct WavesProcessingResult
+    {
         public DateTime Starting;
         public string err_msg;
         public int nsamples;
@@ -1254,7 +1321,7 @@ namespace nortekmed.ahrs {
         public double DirT02; // mean direction
         public double DirT02_bf; // mean direction
         public double DirT02_hf; // mean direction
-        
+
         public double[] Frequencies;
         public double[] PowerSpectrum; // power spectrum
         public double[] MainDir; // direction in each frequency band
@@ -1286,8 +1353,10 @@ namespace nortekmed.ahrs {
 
     }
 
-    public class AHRSWavesEventArgs : EventArgs {
-        public enum KindOfEvent {
+    public class AHRSWavesEventArgs : EventArgs
+    {
+        public enum KindOfEvent
+        {
             acquisitionstarted, acquisitionfinished, idle, remainingsamples,
             acquisitionfailed, processingwaves, processingfinished, protocol_error, process_fake
         }
@@ -1302,63 +1371,76 @@ namespace nortekmed.ahrs {
         int bad_checsum = 0;
         WavesProcessingResult processingresult;
 
-        public WavesProcessingResult Processingresult {
+        public WavesProcessingResult Processingresult
+        {
             get { return processingresult; }
             set { processingresult = value; }
         }
 
-        public int RemainingSamples {
+        public int RemainingSamples
+        {
             get { return remainingsamples; }
             set { remainingsamples = value; }
         }
 
-        public double Delta_time {
+        public double Delta_time
+        {
             get { return delta_time; }
             set { delta_time = value; }
         }
 
-        public int Received_0x80 {
+        public int Received_0x80
+        {
             get { return reveived_0x80; }
             set { reveived_0x80 = value; }
         }
 
-        public int Frame_treated_ok {
+        public int Frame_treated_ok
+        {
             get { return frame_treated_ok; }
             set { frame_treated_ok = value; }
         }
 
-        public int Frame_uncomplet {
+        public int Frame_uncomplet
+        {
             get { return frame_uncomplet; }
             set { frame_uncomplet = value; }
         }
 
-        public int Frame_uncomplet_treated {
+        public int Frame_uncomplet_treated
+        {
             get { return frame_uncomplet_treated; }
             set { frame_uncomplet_treated = value; }
         }
 
-        public int Bad_checksum {
+        public int Bad_checksum
+        {
             get { return bad_checsum; }
             set { bad_checsum = value; }
         }
 
-        public KindOfEvent Kind {
+        public KindOfEvent Kind
+        {
             get { return kind; }
             set { kind = value; }
         }
 
-        public AHRSWavesEventArgs(KindOfEvent kind) {
+        public AHRSWavesEventArgs(KindOfEvent kind)
+        {
             this.kind = kind;
         }
 
     }
-    public class AHRSException : Exception {
+    public class AHRSException : Exception
+    {
         public enum ExceptionCause { Unknown, Alreadyworking, SerialError, AHRSControlError, BIGERROR };
         ExceptionCause cause = ExceptionCause.Unknown;
-        public ExceptionCause Cause {
+        public ExceptionCause Cause
+        {
             get { return cause; }
         }
-        public AHRSException(ExceptionCause cause) {
+        public AHRSException(ExceptionCause cause)
+        {
             this.cause = cause;
         }
 

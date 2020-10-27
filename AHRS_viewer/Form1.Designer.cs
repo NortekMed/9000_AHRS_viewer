@@ -46,6 +46,7 @@
             this.fastLine3 = new Steema.TeeChart.Styles.FastLine();
             this.fastLine4 = new Steema.TeeChart.Styles.FastLine();
             this.fastLine5 = new Steema.TeeChart.Styles.FastLine();
+            this.fastLine6 = new Steema.TeeChart.Styles.FastLine();
             this.tChart5 = new Steema.TeeChart.TChart();
             this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
             this.label_Hm0 = new System.Windows.Forms.Label();
@@ -61,12 +62,18 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.textBox_sprd_val = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.fastLine6 = new Steema.TeeChart.Styles.FastLine();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tChart2 = new Steema.TeeChart.TChart();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -228,7 +235,7 @@
             // 
             // 
             this.tChart1.Legend.Visible = false;
-            this.tChart1.Location = new System.Drawing.Point(251, 311);
+            this.tChart1.Location = new System.Drawing.Point(8, 316);
             this.tChart1.Name = "tChart1";
             // 
             // 
@@ -330,6 +337,22 @@
             // 
             this.fastLine5.YValues.DataMember = "Y";
             // 
+            // fastLine6
+            // 
+            this.fastLine6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(64)))), ((int)(((byte)(107)))));
+            this.fastLine6.ColorEach = false;
+            // 
+            // 
+            // 
+            this.fastLine6.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(64)))), ((int)(((byte)(107)))));
+            this.fastLine6.OriginalCursor = null;
+            this.fastLine6.Title = "fastLine5";
+            this.fastLine6.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
+            // 
+            // 
+            // 
+            this.fastLine6.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
             // tChart5
             // 
             // 
@@ -365,7 +388,7 @@
             // 
             // 
             this.tChart5.Legend.Visible = false;
-            this.tChart5.Location = new System.Drawing.Point(251, 5);
+            this.tChart5.Location = new System.Drawing.Point(6, 10);
             this.tChart5.Name = "tChart5";
             // 
             // 
@@ -530,32 +553,96 @@
             this.textBox1.Text = "spread formula: \r\nsprd = sqrt(2-2M)    ( *180/pi for °)\r\nM=sqrt( C/ D )\r\nwith C =" +
     " qzx[iTp]^2 + qzy[iTp]^2\r\n         D = czz_raw[iTp] * ( cxx[iTp] + cyy[iTp] )\r\n";
             // 
-            // fastLine6
+            // tabControl2
             // 
-            this.fastLine6.Color = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(64)))), ((int)(((byte)(107)))));
-            this.fastLine6.ColorEach = false;
+            this.tabControl2.Controls.Add(this.tabPage3);
+            this.tabControl2.Controls.Add(this.tabPage4);
+            this.tabControl2.Location = new System.Drawing.Point(248, 3);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(1003, 583);
+            this.tabControl2.TabIndex = 11;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.tChart5);
+            this.tabPage3.Controls.Add(this.tChart1);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(995, 557);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "tabPage3";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.tChart2);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(995, 557);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // tChart2
             // 
             // 
             // 
-            this.fastLine6.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(43)))), ((int)(((byte)(64)))), ((int)(((byte)(107)))));
-            this.fastLine6.OriginalCursor = null;
-            this.fastLine6.Title = "fastLine5";
-            this.fastLine6.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
+            // 
+            this.tChart2.Aspect.View3D = false;
             // 
             // 
             // 
-            this.fastLine6.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.tChart2.Axes.Bottom.Title.Caption = "seconde";
+            this.tChart2.Axes.Bottom.Title.Lines = new string[] {
+        "seconde"};
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.tChart2.Axes.Left.Title.Caption = "m/s^2";
+            this.tChart2.Axes.Left.Title.Lines = new string[] {
+        "m/s^2"};
+            // 
+            // 
+            // 
+            this.tChart2.Header.Visible = false;
+            // 
+            // 
+            // 
+            this.tChart2.Legend.Visible = false;
+            this.tChart2.Location = new System.Drawing.Point(5, 128);
+            this.tChart2.Name = "tChart2";
+            // 
+            // 
+            // 
+            this.tChart2.Panel.MarginBottom = 0D;
+            this.tChart2.Panel.MarginLeft = 1D;
+            this.tChart2.Panel.MarginRight = 1D;
+            this.tChart2.Panel.MarginTop = 2D;
+            this.tChart2.Series.Add(this.fastLine1);
+            this.tChart2.Size = new System.Drawing.Size(984, 300);
+            this.tChart2.TabIndex = 3;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1604, 881);
+            this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.tChart5);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.tChart1);
             this.Controls.Add(this.listFileName);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
@@ -569,6 +656,9 @@
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -609,6 +699,10 @@
         private System.Windows.Forms.TextBox textBox_sprd_val;
         private System.Windows.Forms.TextBox textBox1;
         private Steema.TeeChart.Styles.FastLine fastLine6;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private Steema.TeeChart.TChart tChart2;
     }
 }
 
