@@ -312,6 +312,12 @@ namespace AHRS_viewer
 
                 tChart1.Legend.Visible = true;
 
+                isoSurface1.Clear();
+                for (int i = 0; i < 1000; i++)
+                    for (int teta = 0; teta < 360; teta++)
+                        isoSurface1.Add(i, viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta], teta);
+                        //isoSurface1.Add(i, teta, viewer.ahrs_wave.raw_czz[i] * viewer.ahrs_wave.DSF[i, teta]);
+
             }
             catch (Exception ex) { }
         }
@@ -405,6 +411,9 @@ namespace AHRS_viewer
         {
 
         }
-
+        private void tChart2_DClick(object sender, EventArgs e)
+        {
+            tChart2.ShowEditor();
+        }
     }
 }
