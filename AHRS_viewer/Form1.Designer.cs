@@ -63,11 +63,12 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tChart2 = new Steema.TeeChart.TChart();
             this.tChart5 = new Steema.TeeChart.TChart();
             this.fastLine1 = new Steema.TeeChart.Styles.FastLine();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tChart2 = new Steema.TeeChart.TChart();
             this.isoSurface1 = new Steema.TeeChart.Styles.IsoSurface();
+            this.b_write_huv = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -512,8 +513,78 @@
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // tChart5
+            // 
+            // 
+            // 
+            // 
+            this.tChart5.Aspect.View3D = false;
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.tChart5.Axes.Bottom.Title.Caption = "seconde";
+            this.tChart5.Axes.Bottom.Title.Lines = new string[] {
+        "seconde"};
+            // 
+            // 
+            // 
+            // 
+            // 
+            // 
+            this.tChart5.Axes.Left.Title.Caption = "m/s^2";
+            this.tChart5.Axes.Left.Title.Lines = new string[] {
+        "m/s^2"};
+            // 
+            // 
+            // 
+            this.tChart5.Header.Visible = false;
+            // 
+            // 
+            // 
+            this.tChart5.Legend.Visible = false;
+            this.tChart5.Location = new System.Drawing.Point(6, 10);
+            this.tChart5.Name = "tChart5";
+            // 
+            // 
+            // 
+            this.tChart5.Panel.MarginBottom = 0D;
+            this.tChart5.Panel.MarginLeft = 1D;
+            this.tChart5.Panel.MarginRight = 1D;
+            this.tChart5.Panel.MarginTop = 2D;
+            this.tChart5.Series.Add(this.fastLine1);
+            this.tChart5.Size = new System.Drawing.Size(984, 300);
+            this.tChart5.TabIndex = 4;
+            // 
+            // fastLine1
+            // 
+            this.fastLine1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
+            this.fastLine1.ColorEach = false;
+            // 
+            // 
+            // 
+            this.fastLine1.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
+            this.fastLine1.OriginalCursor = null;
+            this.fastLine1.Title = "fastLine1";
+            this.fastLine1.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
+            // 
+            // 
+            // 
+            this.fastLine1.XValues.DataMember = "X";
+            this.fastLine1.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
+            // 
+            // 
+            // 
+            this.fastLine1.YValues.DataMember = "Y";
+            // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.b_write_huv);
             this.tabPage4.Controls.Add(this.tChart2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
@@ -584,108 +655,14 @@
             this.tChart2.TabIndex = 3;
             this.tChart2.DoubleClick += new System.EventHandler(this.tChart2_DClick);
             // 
-            // tChart5
-            // 
-            // 
-            // 
-            // 
-            this.tChart5.Aspect.View3D = false;
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.tChart5.Axes.Bottom.Title.Caption = "seconde";
-            this.tChart5.Axes.Bottom.Title.Lines = new string[] {
-        "seconde"};
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.tChart5.Axes.Left.Title.Caption = "m/s^2";
-            this.tChart5.Axes.Left.Title.Lines = new string[] {
-        "m/s^2"};
-            // 
-            // 
-            // 
-            this.tChart5.Header.Visible = false;
-            // 
-            // 
-            // 
-            this.tChart5.Legend.Visible = false;
-            this.tChart5.Location = new System.Drawing.Point(6, 10);
-            this.tChart5.Name = "tChart5";
-            // 
-            // 
-            // 
-            this.tChart5.Panel.MarginBottom = 0D;
-            this.tChart5.Panel.MarginLeft = 1D;
-            this.tChart5.Panel.MarginRight = 1D;
-            this.tChart5.Panel.MarginTop = 2D;
-            this.tChart5.Series.Add(this.fastLine1);
-            this.tChart5.Size = new System.Drawing.Size(984, 300);
-            this.tChart5.TabIndex = 4;
-            // 
-            // fastLine1
-            // 
-            this.fastLine1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
-            this.fastLine1.ColorEach = false;
-            // 
-            // 
-            // 
-            this.fastLine1.LinePen.Color = System.Drawing.Color.FromArgb(((int)(((byte)(68)))), ((int)(((byte)(102)))), ((int)(((byte)(163)))));
-            this.fastLine1.OriginalCursor = null;
-            this.fastLine1.Title = "fastLine1";
-            this.fastLine1.TreatNulls = Steema.TeeChart.Styles.TreatNullsStyle.Ignore;
-            // 
-            // 
-            // 
-            this.fastLine1.XValues.DataMember = "X";
-            this.fastLine1.XValues.Order = Steema.TeeChart.Styles.ValueListOrder.Ascending;
-            // 
-            // 
-            // 
-            this.fastLine1.YValues.DataMember = "Y";
-            // 
             // isoSurface1
             // 
             // 
             // 
             // 
-            this.isoSurface1.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(249)))), ((int)(((byte)(164)))));
-            // 
-            // 
-            // 
-            this.isoSurface1.Brush.Gradient.EndColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(153)))), ((int)(((byte)(153)))));
-            this.isoSurface1.Brush.Gradient.MiddleColor = System.Drawing.Color.Empty;
-            this.isoSurface1.Brush.Gradient.StartColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.isoSurface1.Color = System.Drawing.Color.Empty;
+            this.isoSurface1.Brush.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.isoSurface1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.isoSurface1.ColorEach = false;
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.isoSurface1.Marks.Brush.Color = System.Drawing.Color.LightYellow;
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            this.isoSurface1.Marks.Shadow.Brush.Color = System.Drawing.Color.Gray;
-            this.isoSurface1.Marks.Shadow.Height = 1;
-            this.isoSurface1.Marks.Shadow.Visible = true;
-            this.isoSurface1.Marks.Shadow.Width = 1;
-            this.isoSurface1.NumXValues = 1;
-            this.isoSurface1.NumZValues = 1;
             this.isoSurface1.OriginalCursor = null;
             this.isoSurface1.PaletteMin = 0D;
             this.isoSurface1.PaletteStep = 0D;
@@ -708,6 +685,17 @@
             // 
             // 
             this.isoSurface1.ZValues.DataMember = "Z";
+            // 
+            // b_write_huv
+            // 
+            this.b_write_huv.Enabled = false;
+            this.b_write_huv.Location = new System.Drawing.Point(26, 527);
+            this.b_write_huv.Name = "b_write_huv";
+            this.b_write_huv.Size = new System.Drawing.Size(86, 19);
+            this.b_write_huv.TabIndex = 4;
+            this.b_write_huv.Text = "button3";
+            this.b_write_huv.UseVisualStyleBackColor = true;
+            this.b_write_huv.Click += new System.EventHandler(this.write_huv);
             // 
             // Form1
             // 
@@ -779,6 +767,7 @@
         private Steema.TeeChart.TChart tChart5;
         private Steema.TeeChart.Styles.FastLine fastLine1;
         private Steema.TeeChart.Styles.IsoSurface isoSurface1;
+        private System.Windows.Forms.Button b_write_huv;
     }
 }
 

@@ -61,6 +61,11 @@ namespace nortekmed.ahrs
         public double[,] DSF = new double[4096, 360];
 
 
+        public double[] dh_tab = new double[4096];
+        public double[] u_tab = new double[4096];
+        public double[] v_tab = new double[4096];
+
+
         public double correction_value;
         public double corrperiod;
 
@@ -353,13 +358,12 @@ namespace nortekmed.ahrs
                 //meanacceleration[1] = meanacceleration[1] / samples.Length;
                 //meanacceleration[2] = meanacceleration[2] / samples.Length;
 
-                //// remove the mean and multiply by acceleration constant to have it in m/(s*s)
-                //for (int i = 0; i < samples.Length; i++)
-                //{
-                //    acc_x[i] = (acc_x[i] - meanacceleration[0]) * 9.80665;
-                //    acc_y[i] = (acc_y[i] - meanacceleration[1]) * 9.80665;
-                //    acc_z[i] = (acc_z[i] - meanacceleration[2]) * 9.80665;
-                //}
+                // remove the mean and multiply by acceleration constant to have it in m/(s*s)
+                for (int i = 0; i < samples.Length; i++)
+                {
+                    acc_x[i] = (acc_x[i]) / 9.80665;
+                    acc_y[i] = (acc_y[i]) / 9.80665;
+                }
 
                 //int NFFT = nsamples;
                 int NFFT = samples.Length; // sample.Length is nsamples minus 2 margin -- try to disable AHRS noise ....
@@ -452,7 +456,6 @@ namespace nortekmed.ahrs
                 double[] k = new double[1 + NFFT / 2];
                 for (int i = 1; i < NFFT / 2; i++)
                 {
-                    omega[i] = 2 * Math.PI * i * deltaF;
                     omega[i] = 2 * Math.PI * i * deltaF;
                     k[i] = (2 * Math.PI) / (i * deltaF * Math.Sqrt(g * h));
                 }
@@ -867,23 +870,57 @@ namespace nortekmed.ahrs
                 filter = new HighPassFilter(); // to reinitialize coeff
                 filter.Filter(calcbuffer2, calcbuffer1);
                 // here in calcbuffer1 there is the filtered speed
-                calcbuffer2[0] = 0;
-                calcbuffer2[1] = 0;
+                calcbuffer2[0] = 10;
+                calcbuffer2[1] = 10;
+                dh_tab[0] = 10;
+                dh_tab[1] = 10;
                 double sumcalcbuffer2 = 0;
                 for (int i = 2; i < calcbuffer1.Length; i++)
                 {
                     calcbuffer2[i] = calcbuffer2[i - 1] + calcbuffer1[i - 1] / Fs;
-                    //tab_high[i] = calcbuffer2[i];
                     sumcalcbuffer2 += calcbuffer2[i];
+                    dh_tab[i] = calcbuffer2[i];
                 }
                 // then we remove the mean
                 sumcalcbuffer2 = sumcalcbuffer2 / calcbuffer2.Length;
                 for (int i = 0; i < calcbuffer2.Length; i++)
                 {
                     calcbuffer2[i] -= sumcalcbuffer2;
-                    //tab_high[i] = calcbuffer2[i];
+                    
                 }
                 // in calcbuffer2 the position 
+
+
+                ////////////////////////////////////////////////////////
+                ///
+                // speed u calculation
+                double[] calcbuffer_u = new double[acc_x.Length];
+                HighPassFilter filter_u = new HighPassFilter();
+                filter.Filter(acc_x, calcbuffer_u);
+                double[] speed_u = new double[acc_x.Length];
+                speed_u[0] = 0;
+                u_tab[0] = 0;
+                for (int i = 1; i < calcbuffer_u.Length; i++)
+                {
+                    speed_u[i] = speed_u[i - 1] + calcbuffer_u[i - 1] / Fs;
+                    u_tab[i] = speed_u[i];
+                }
+
+                ///
+                // speed v calculation
+                double[] calcbuffer_v = new double[acc_y.Length];
+                HighPassFilter filter_v = new HighPassFilter();
+                filter.Filter(acc_y, calcbuffer_v);
+                double[] speed_v = new double[acc_y.Length];
+                speed_v[0] = 0;
+                v_tab[0] = 0;
+                for (int i = 1; i < calcbuffer_v.Length; i++)
+                {
+                    speed_v[i] = speed_v[i - 1] + calcbuffer_v[i - 1] / Fs;
+                    v_tab[i] = speed_v[i];
+                }
+
+                //////////////////////////////////////////////////////////////////////
 
                 // indices of zero up crossing
                 int zeroupcrossendstart = 20;       // DBE remplace 200 par 20 pour test plus rapide !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

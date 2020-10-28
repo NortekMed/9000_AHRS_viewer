@@ -24,6 +24,8 @@ namespace AHRS_viewer
         string last_directory_path;
         string last_file_path;
 
+        string selected_filename = "";
+
         public Form1()
         {
             InitializeComponent();
@@ -83,6 +85,7 @@ namespace AHRS_viewer
 
                     //Get the path of specified file
                     filePath = openFileDialog.FileName;
+                    selected_filename = filePath;
 
                     last_file_path = System.IO.Path.GetDirectoryName(filePath);
 
@@ -166,6 +169,8 @@ namespace AHRS_viewer
 
             //string[] argTab = arguments.ToArray();
             /* string[] accel_line;*/// = arguments.ToArray();
+
+            b_write_huv.Enabled = false;
 
             double.TryParse(FS_select.Items[FS_select.SelectedIndex].ToString(), out viewer.ahrs_wave.Fs);
             double.TryParse(ahrs_corr.Items[ahrs_corr.SelectedIndex].ToString(), out viewer.ahrs_wave.correction_value);
@@ -316,7 +321,10 @@ namespace AHRS_viewer
                 for (int i = 0; i < 1000; i++)
                     for (int teta = 0; teta < 360; teta++)
                         isoSurface1.Add(i, viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta], teta);
-                        //isoSurface1.Add(i, teta, viewer.ahrs_wave.raw_czz[i] * viewer.ahrs_wave.DSF[i, teta]);
+                //isoSurface1.Add(i, teta, viewer.ahrs_wave.raw_czz[i] * viewer.ahrs_wave.DSF[i, teta]);
+
+
+                b_write_huv.Enabled = true;
 
             }
             catch (Exception ex) { }
@@ -381,6 +389,9 @@ namespace AHRS_viewer
             int indexitem = listFileName.SelectedIndex;
             string file_to_read = listFilePath[indexitem];
 
+
+            selected_filename = System.IO.Path.GetFileName(file_to_read);
+
             using (StreamReader reader = new StreamReader(file_to_read))
             {
 
@@ -414,6 +425,54 @@ namespace AHRS_viewer
         private void tChart2_DClick(object sender, EventArgs e)
         {
             tChart2.ShowEditor();
+        }
+
+        private void write_huv(object sender, EventArgs e)
+        {
+            string data = "";
+            for(int i = 0; i < 4096; i++)
+            {
+                data += viewer.ahrs_wave.dh_tab[i].ToString() + ";" 
+                     + viewer.ahrs_wave.u_tab[i].ToString() + ";"
+                     + viewer.ahrs_wave.v_tab[i].ToString() + ";"
+                     + "\n";
+            }
+
+
+            string file_name = selected_filename.Split('_').ElementAt(0);
+            string file_path = Directory.GetCurrentDirectory() + "//" + file_name + "_PUV.csv";
+            //string file_path = Directory.GetCurrentDirectory() + "//" + DateTime.Now.ToString("yyyy-MM-ddTHH-mm-ssZ") + "_PUV.csv";
+
+            try
+            {
+                File.WriteAllText(file_path, data);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("\r\n Log_data problem: " + ex.Source + " : " + ex.Message);
+            }
+
+            //if (File.Exists(file_path) == false)
+            //{
+            //    using (StreamWriter swritter = File.CreateText(file_path))
+            //    {
+            //        swritter.Close();
+            //    }
+            //}
+            
+            //try
+            //{
+            //    using (StreamWriter sw = File.AppendText(file_path))
+            //    {
+            //        sw.Write(data);
+            //        sw.Close();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Console.WriteLine("\r\n Log_data problem: " + ex.Source + " : " + ex.Message);
+            //}
+            
         }
     }
 }
