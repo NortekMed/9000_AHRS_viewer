@@ -596,9 +596,6 @@ namespace nortekmed.ahrs
 
                         corrected_czz[i] = Math.Pow(10, log_czz[i] / 10);           // for register in file  
 
-
-
-
                         a0_tab[i] = czz[i] / Math.PI;
 
                         a1_tab[i] = -qzx[i] / (Math.PI * Math.Pow(omega[i], 2)) * k[i];
@@ -620,8 +617,6 @@ namespace nortekmed.ahrs
                         }
 
                         czz[i] = corrected_czz[i];                                   // return in linear view
-
-                        //czz[i] += ahrs_correction;
 
 
                         // initialize with 0

@@ -317,12 +317,19 @@ namespace AHRS_viewer
 
                 tChart1.Legend.Visible = true;
 
-                isoSurface1.Clear();
-                for (int i = 0; i < 1000; i++)
-                    for (int teta = 0; teta < 360; teta++)
-                        isoSurface1.Add(i, viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta], teta);
-                //isoSurface1.Add(i, teta, viewer.ahrs_wave.raw_czz[i] * viewer.ahrs_wave.DSF[i, teta]);
+                double z;
 
+                isoSurface1.Clear();
+                colorGrid1.Clear();
+                for (int teta = 0; teta < 360; teta++)
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        z = viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta];
+                        isoSurface1.Add(i, z, teta);
+                        colorGrid1.Add(i, z, teta);
+                    }
+
+                //write_xyz();
 
                 b_write_huv.Enabled = true;
 
@@ -473,6 +480,122 @@ namespace AHRS_viewer
             //    System.Console.WriteLine("\r\n Log_data problem: " + ex.Source + " : " + ex.Message);
             //}
             
+        }
+
+        private void write_xyz()
+        {
+            string data = "";
+            double z;
+            for (int teta = 0; teta < 360; teta++)
+                for (int i = 0; i < 1000; i++)
+                {
+                    z = viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta];
+                    data += i.ToString() + ';'
+                            + teta.ToString() + ';'
+                            + z.ToString() + ';'
+                            +'\n';
+                }
+
+
+            string file_name = selected_filename.Split('_').ElementAt(0);
+            string file_path = Directory.GetCurrentDirectory() + "//" + file_name + "_XYZ.csv";
+
+            try
+            {
+                File.WriteAllText(file_path, data);
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("\r\n Log_data problem: " + ex.Source + " : " + ex.Message);
+            }
+
+
+        }
+
+        private void Read_Spectre(object sender, EventArgs e)
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                if (last_file_path == "")
+                    openFileDialog.InitialDirectory = "E:\\NortekMed_DEV\\20 - Projects\\1741_DUNK_EDF\\recup_apres_test_bfhf_05-10-2020\\Logs";//E:\NortekMed_DEV\20 - Projects\1741_DUNK_EDF\recup_apres_test_bfhf_05 - 10 - 2020\Logs
+                                                                                                                                                //else
+                                                                                                                                                //{
+                                                                                                                                                //    last_file_path = 
+                                                                                                                                                //}
+
+                openFileDialog.Filter = "csv files (*.txt)|*.csv|All files (*.*)|*.*";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+
+
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+                    selected_filename = filePath;
+
+                    last_file_path = System.IO.Path.GetDirectoryName(filePath);
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+
+                        //fileContent = reader.ReadToEnd();
+                        List<string> arguments = new List<string>();
+                        string line = "";
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            if ((line.Length != 0) && !line.Contains("//"))
+                                arguments.Add(line);
+                        }
+
+                        isoSurface1.Clear();
+                        colorGrid1.Clear();
+                        //for (int i = 0; i < arguments.Count; i++)
+                        //{
+                        //    string[] splitted = arguments.ElementAt(i).Split(';');
+                        //    double x, y, z;
+                        //    double.TryParse(splitted[0], out x);
+                        //    double.TryParse(splitted[1], out y);
+                        //    double.TryParse(splitted[2], out z);
+
+                        //    isoSurface1.Add(x * 100, y, z * 1000000);
+                        //    colorGrid1.Add(x * 100, z, y);
+                        //}
+
+                        for (int i = 0; i < 90; i++)
+                            for (int j = 0; j < 30; j++)
+
+                            {
+                                string[] splitted = arguments.ElementAt(i + j * 90).Split(';');
+                                double x, y, z;
+                                double.TryParse(splitted[0], out x);
+                                double.TryParse(splitted[1], out y);
+                                double.TryParse(splitted[2], out z);
+
+                                isoSurface1.Add(x * 100, y, z * 1000000);
+                                colorGrid1.Add(x * 100, z, y);
+                            }
+
+                    }
+
+                    
+
+
+
+                }
+            }
+        }
+
+        private void tChart2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
