@@ -738,7 +738,6 @@
             // 
             // 
             this.colorGrid1.Pen.Visible = false;
-            this.colorGrid1.SeriesData = resources.GetString("colorGrid1.SeriesData");
             this.colorGrid1.TimesZOrder = 5;
             this.colorGrid1.Title = "colorGrid1";
             this.colorGrid1.UseColorRange = false;

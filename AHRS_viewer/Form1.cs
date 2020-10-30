@@ -318,6 +318,8 @@ namespace AHRS_viewer
                 tChart1.Legend.Visible = true;
 
                 double z;
+                double min = double.MaxValue;
+                double max = double.MinValue;
 
                 isoSurface1.Clear();
                 colorGrid1.Clear();
@@ -325,6 +327,20 @@ namespace AHRS_viewer
                     for (int i = 0; i < 1000; i++)
                     {
                         z = viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta];
+                        if (z != 0)
+                            z = Math.Log10(z);
+
+                        if (z < min)
+                            min = z;
+
+                        if (z > max)
+                            max = z;
+                    }
+
+                for (int teta = 0; teta < 360; teta++)
+                    for (int i = 0; i < 1000; i++)
+                    {
+                        z = (viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta] - min) / (max-min);
                         isoSurface1.Add(i, z, teta);
                         colorGrid1.Add(i, z, teta);
                     }

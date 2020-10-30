@@ -610,8 +610,12 @@ namespace nortekmed.ahrs
                         teta1_tab[i] = Math.Atan2(b1_tab[i], a1_tab[i]);
                         teta2_tab[i] = 0.5 * Math.Atan2(b2_tab[i], a2_tab[i]);
 
+                        double res1, res2, res3; ;
                         for (int teta = 0; teta < 360; teta++)
                         {
+                            res1 = r1_tab[i] * Math.Cos(teta * Math.PI / 180.0 - teta1_tab[i]);
+                            res2 = r2_tab[i] * Math.Cos(2.0 * (teta * Math.PI / 180.0 - teta2_tab[i]));
+                            res3 = (0.5 + res1 + res2) / Math.PI;
                             DSF[i, teta] = (0.5 + r1_tab[i] * Math.Cos(teta * Math.PI / 180.0 - teta1_tab[i]) + r2_tab[i]
                                             * Math.Cos(2.0 * (teta * Math.PI / 180.0 - teta2_tab[i]))) / Math.PI;
                         }
