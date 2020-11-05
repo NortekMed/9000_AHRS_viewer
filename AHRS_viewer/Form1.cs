@@ -340,14 +340,16 @@ namespace AHRS_viewer
                 for (int teta = 0; teta < 360; teta++)
                     for (int i = 0; i < 1000; i++)
                     {
-                        z = (viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta] - min) / (max-min);
+                        z = (viewer.ahrs_wave.omega_czz[i] * viewer.ahrs_wave.DSF[i, teta] - min) / (max - min);
                         isoSurface1.Add(i, z, teta);
                         colorGrid1.Add(i, z, teta);
                     }
 
                 //write_xyz();
 
-                b_write_huv.Enabled = true;
+                b_write_huv.Invoke((MethodInvoker)(() => b_write_huv.Enabled = true));
+                //b_write_huv.Enabled = true;
+                
 
             }
             catch (Exception ex) { }
@@ -412,7 +414,7 @@ namespace AHRS_viewer
             int indexitem = listFileName.SelectedIndex;
             string file_to_read = listFilePath[indexitem];
 
-
+            
             selected_filename = System.IO.Path.GetFileName(file_to_read);
 
             using (StreamReader reader = new StreamReader(file_to_read))

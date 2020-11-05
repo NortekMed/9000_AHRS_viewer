@@ -598,8 +598,8 @@ namespace nortekmed.ahrs
 
                         a0_tab[i] = czz[i] / Math.PI;
 
-                        a1_tab[i] = -qzx[i] / (Math.PI * Math.Pow(omega[i], 2)) * k[i];
-                        b1_tab[i] = -qzy[i] / (Math.PI * Math.Pow(omega[i], 2)) * k[i];
+                        a1_tab[i] = -qzx[i] / (Math.PI * Math.Pow(omega[i], 2) * k[i]);
+                        b1_tab[i] = -qzy[i] / (Math.PI * Math.Pow(omega[i], 2) * k[i]);
 
                         a2_tab[i] = (cxx[i] - cyy[i]) / (Math.PI * Math.Pow(k[i], 2));
                         b2_tab[i] = (2 * cxy[i]) / (Math.PI * Math.Pow(k[i], 2));

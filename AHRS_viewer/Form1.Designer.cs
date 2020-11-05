@@ -605,7 +605,7 @@
             this.read_spectre.Name = "read_spectre";
             this.read_spectre.Size = new System.Drawing.Size(86, 19);
             this.read_spectre.TabIndex = 5;
-            this.read_spectre.Text = "button3";
+            this.read_spectre.Text = "Read spectre";
             this.read_spectre.UseVisualStyleBackColor = true;
             this.read_spectre.Click += new System.EventHandler(this.Read_Spectre);
             // 
@@ -616,7 +616,7 @@
             this.b_write_huv.Name = "b_write_huv";
             this.b_write_huv.Size = new System.Drawing.Size(86, 19);
             this.b_write_huv.TabIndex = 4;
-            this.b_write_huv.Text = "button3";
+            this.b_write_huv.Text = "PUV";
             this.b_write_huv.UseVisualStyleBackColor = true;
             this.b_write_huv.Click += new System.EventHandler(this.write_huv);
             // 
