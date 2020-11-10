@@ -869,10 +869,10 @@ namespace nortekmed.ahrs
                 filter = new HighPassFilter(); // to reinitialize coeff
                 filter.Filter(calcbuffer2, calcbuffer1);
                 // here in calcbuffer1 there is the filtered speed
-                calcbuffer2[0] = 10;
-                calcbuffer2[1] = 10;
-                dh_tab[0] = 10;
-                dh_tab[1] = 10;
+                calcbuffer2[0] = 0;
+                calcbuffer2[1] = 0;
+                dh_tab[0] = 0;
+                dh_tab[1] = 0;
                 double sumcalcbuffer2 = 0;
                 for (int i = 2; i < calcbuffer1.Length; i++)
                 {
@@ -893,6 +893,7 @@ namespace nortekmed.ahrs
                 ////////////////////////////////////////////////////////
                 ///
                 // speed u calculation
+                double sum_u = 0;
                 double[] calcbuffer_u = new double[acc_x.Length];
                 HighPassFilter filter_u = new HighPassFilter();
                 filter.Filter(acc_x, calcbuffer_u);
@@ -903,10 +904,18 @@ namespace nortekmed.ahrs
                 {
                     speed_u[i] = speed_u[i - 1] + calcbuffer_u[i - 1] / Fs;
                     u_tab[i] = speed_u[i];
+                    sum_u += speed_u[i];
+                }
+                sum_u = sum_u / calcbuffer_u.Length;
+                for (int i = 1; i < calcbuffer_u.Length; i++)
+                {
+                    speed_u[i] -= sum_u;
+                    u_tab[i] -= sum_u;
                 }
 
                 ///
                 // speed v calculation
+                double sum_v = 0;
                 double[] calcbuffer_v = new double[acc_y.Length];
                 HighPassFilter filter_v = new HighPassFilter();
                 filter.Filter(acc_y, calcbuffer_v);
@@ -917,6 +926,13 @@ namespace nortekmed.ahrs
                 {
                     speed_v[i] = speed_v[i - 1] + calcbuffer_v[i - 1] / Fs;
                     v_tab[i] = speed_v[i];
+                    sum_v += speed_v[i];
+                }
+                sum_v = sum_v / calcbuffer_v.Length;
+                for (int i = 1; i < calcbuffer_v.Length; i++)
+                {
+                    speed_v[i] -= sum_v;
+                    v_tab[i] -= sum_v;
                 }
 
                 //////////////////////////////////////////////////////////////////////
